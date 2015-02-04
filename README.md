@@ -2,35 +2,37 @@ cmdr helps writing command-line programs with subcommands in Go.
 
 example.go:
 
-    package main
-    import (
-      "github.com/rsms/cmdr"
-    )
+```go
+package main
+import (
+  "github.com/rsms/cmdr"
+)
 
-    var quiet = false
-    var rootDir = "."
+var quiet = false
+var rootDir = "."
 
-    var version = cmdr.Cmd("version", "Show version", func () {
-      println("cmdr example v1.2.3")
-    })
+var version = cmdr.Cmd("version", "Show version", func () {
+  println("cmdr example v1.2.3")
+})
 
-    var foo = cmdr.Cmd("foo", "Example command", func (opt *struct {
-      FooBar      bool     `        Bar the foo with some bar`
-      FirstName   string   `="John" Name of a cool person`
-      Dir         string   `?"."    Directory to list`
-      File        []string `!       Some files`
-    }, cmd *cmdr.Command) {
-      if !quiet {
-        cmd.Logf("foo command run with opt=%+v", opt)
-      }
-      // Do something useful
-    })
+var foo = cmdr.Cmd("foo", "Example command", func (opt *struct {
+  FooBar      bool     `        Bar the foo with some bar`
+  FirstName   string   `="John" Name of a cool person`
+  Dir         string   `?"."    Directory to list`
+  File        []string `!       Some files`
+}, cmd *cmdr.Command) {
+  if !quiet {
+    cmd.Logf("foo command run with opt=%+v", opt)
+  }
+  // Do something useful
+})
 
-    func main() {
-      cmdr.BoolVar(&quiet, "quiet", false, "Suppress status messages")
-      cmdr.StringVar(&rootDir, "root-dir", rootDir, "Directory to start in")
-      cmdr.Main()
-    }
+func main() {
+  cmdr.BoolVar(&quiet, "quiet", false, "Suppress status messages")
+  cmdr.StringVar(&rootDir, "root-dir", rootDir, "Directory to start in")
+  cmdr.Main()
+}
+```
 
 Output:
 
